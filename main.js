@@ -21,7 +21,7 @@ function updateResources() {
 
     // Increment resources each second by the growth rate, capped at resourceCap
     if (resources < resourceCap) {
-        resources += resourceGrowthRate;
+        resources += resourceGrowthRate * resources;
         if (resources > resourceCap) {
             resources = resourceCap;
         }
