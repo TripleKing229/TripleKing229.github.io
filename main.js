@@ -17,11 +17,11 @@ const increaseCapButton = document.getElementById('increase-cap-btn');
 
 // Function to update resources
 function updateResources() {
-    const bacteriaGrowthRate = Math.E * creatures.bacteria.growthRateMultiplier;
+    const resourceGrowthRate = Math.E;
 
     // Increment resources each second by the growth rate, capped at resourceCap
     if (resources < resourceCap) {
-        resources += bacteriaGrowthRate;
+        resources += resourceGrowthRate;
         if (resources > resourceCap) {
             resources = resourceCap;
         }
