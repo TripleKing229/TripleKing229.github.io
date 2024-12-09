@@ -52,16 +52,15 @@ function growCreature(creatureKey) {
     if (targetState.count >= consumptionRate) {
         // Enough food: consume and grow
         targetState.count -= consumptionRate;
-        // Increase by growth rate: 
-        // If you have 10 creatures and multiplier is 0.1, count becomes floor(10 * (1 + 0.1)) = 11
-        creature.count = Math.floor(creature.count * (1 + growthRateMultiplier));
+        // Multiply count by (1 + growthRateMultiplier)
+        // e.g. 5 creatures and a 0.1 multiplier -> 5 * 1.1 = 5.5
+        creature.count = creature.count * (1 + growthRateMultiplier);
     } else {
-        // Not enough food: consume what's available and shrink
+        // Not enough food: consume what’s available and shrink
         targetState.count = Math.max(0, targetState.count - consumptionRate);
-        // Decrease by growth rate:
-        // If you have 10 creatures and multiplier is 0.1, count becomes floor(10 * (1 - 0.1)) = floor(9) = 9
-        const reducedCount = Math.floor(creature.count * (1 - growthRateMultiplier));
-        creature.count = Math.max(0, reducedCount);
+        // Multiply count by (1 - growthRateMultiplier)
+        // e.g. 5 creatures and a 0.1 multiplier -> 5 * 0.9 = 4.5
+        creature.count = Math.max(0, creature.count * (1 - growthRateMultiplier));
     }
 
     // Update displays
@@ -79,11 +78,13 @@ function growCreature(creatureKey) {
 
     const creatureDisplay = document.getElementById(`${creatureKey}-count`);
     if (creatureDisplay) {
+        // Display floored value, but internally we keep the float
         creatureDisplay.textContent = Math.floor(creature.count);
     } else {
         console.error(`Element with id '${creatureKey}-count' not found in HTML.`);
     }
 }
+
 
 // Function to dynamically enable or disable buttons
 function updateButtonStates() {
