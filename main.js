@@ -17,11 +17,11 @@ const increaseCapButton = document.getElementById('increase-cap-btn');
 
 // Function to update resources
 function updateResources() {
-    const resourceGrowthRate = Math.E;
+    const resourceGrowthRate = 100;
 
     // Increment resources each second by the growth rate, capped at resourceCap
     if (resources < resourceCap) {
-        resources *= resourceGrowthRate;
+        resources += resourceGrowthRate;
         if (resources > resourceCap) {
             resources = resourceCap;
         }
@@ -61,6 +61,13 @@ function growCreature(creatureKey) {
         // Multiply count by (1 - growthRateMultiplier)
         // e.g. 5 creatures and a 0.1 multiplier -> 5 * 0.9 = 4.5
         creature.count = Math.max(0, creature.count * (1 - growthRateMultiplier));
+    }
+
+    creature.fraction += creature.count - Math.floor(creature.count)
+    creature.count = Math.floor(creature.count)
+    if (creature.fraction >= 1){
+        creature.count++
+        creature.fraction--
     }
 
     // Update displays
