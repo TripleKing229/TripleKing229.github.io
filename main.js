@@ -17,11 +17,11 @@ const increaseCapButton = document.getElementById('increase-cap-btn');
 
 // Function to update resources
 function updateResources() {
-    const resourceGrowthRate = 100;
+    const resourceGrowthRate = 2;
 
     // Increment resources each second by the growth rate, capped at resourceCap
     if (resources < resourceCap) {
-        resources += resourceGrowthRate;
+        resources *= resourceGrowthRate;
         if (resources > resourceCap) {
             resources = resourceCap;
         }
