@@ -84,13 +84,6 @@ function growCreature(creatureKey) {
             console.error(`Element with id '${targetKey}-count' not found in HTML.`);
         }
     }
-
-    const creatureDisplay = document.getElementById(`${creatureKey}-count`);
-    if (creatureDisplay) {
-        creatureDisplay.textContent = Math.floor(creature.count);
-    } else {
-        console.error(`Element with id '${creatureKey}-count' not found in HTML.`);
-    }
 }
 
 // Function to dynamically enable or disable buttons
