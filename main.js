@@ -37,11 +37,9 @@ function updateResources() {
 function growCreature(creatureKey) {
     const creature = creatureState[creatureKey];
     const creatureData = creatures[creatureKey];
-    const growthRate = Math.E * creatureData.growthRateMultiplier;
-
+    const growthRate = creatureData.growthRateMultiplier;
     const targetKey = creatureData.consumptionTarget;
 
-    // Determine target state
     let targetState;
     if (targetKey === 'resources') {
         targetState = { count: resources };
@@ -52,18 +50,16 @@ function growCreature(creatureKey) {
     const consumptionRate = creature.count * creatureData.consumptionRate;
 
     if (targetState.count >= consumptionRate) {
-        // Enough target available, consume and grow fractionally
+        // Enough target available: consume and grow at growth rate
         targetState.count -= consumptionRate;
         creature.fraction *= growthRate;
     } else {
-        // Not enough target, shrink population
-        const deficit = consumptionRate - targetState.count;
-        const creaturesToRemove = Math.ceil(deficit / creatureData.consumptionRate);
-        creature.fraction -= creaturesToRemove;
+        // Not enough target: consume what's available and reduce by growth rate
         targetState.count = Math.max(0, targetState.count - consumptionRate);
+        creature.fraction /= growthRate;
     }
 
-    // Handle fractional growth or shrinkage
+    // Convert fractional growth or shrinkage into whole creatures
     if (creature.fraction >= 1) {
         const wholeGrowth = Math.floor(creature.fraction);
         creature.fraction -= wholeGrowth;
@@ -76,7 +72,7 @@ function growCreature(creatureKey) {
 
     // Update displays
     if (targetKey === 'resources') {
-        // Update resources since it's the target
+        // Update resources if they are the target
         resources = targetState.count;
         resourceCount.textContent = Math.floor(resources);
     } else {
@@ -88,6 +84,15 @@ function growCreature(creatureKey) {
             console.error(`Element with id '${targetKey}-count' not found in HTML.`);
         }
     }
+
+    const creatureDisplay = document.getElementById(`${creatureKey}-count`);
+    if (creatureDisplay) {
+        creatureDisplay.textContent = Math.floor(creature.count);
+    } else {
+        console.error(`Element with id '${creatureKey}-count' not found in HTML.`);
+    }
+}
+
 
     const creatureDisplay = document.getElementById(`${creatureKey}-count`);
     if (creatureDisplay) {
