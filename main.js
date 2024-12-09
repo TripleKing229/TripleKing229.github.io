@@ -37,7 +37,7 @@ function updateResources() {
 function growCreature(creatureKey) {
     const creature = creatureState[creatureKey];
     const creatureData = creatures[creatureKey];
-    const growthRate = creatureData.growthRateMultiplier;
+    const growthRate = 1 + creatureData.growthRateMultiplier;
     const targetKey = creatureData.consumptionTarget;
 
     let targetState;
