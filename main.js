@@ -91,7 +91,7 @@ function growCreature(creatureKey) {
     } else {
         console.error(`Element with id '${creatureKey}-count' not found in HTML.`);
     }
-}
+
 
 
     const creatureDisplay = document.getElementById(`${creatureKey}-count`);
