@@ -38,7 +38,6 @@ function growCreature(creatureKey) {
     const creature = creatureState[creatureKey];
     const creatureData = creatures[creatureKey];
     const growthRate = Math.E * creatureData.growthRateMultiplier;
-    const growth = creature.count * (growthRate - 1) / 10; // Smooth growth rate per second
 
     const targetKey = creatureData.consumptionTarget;
 
@@ -55,7 +54,7 @@ function growCreature(creatureKey) {
     if (targetState.count >= consumptionRate) {
         // Enough target available, consume and grow fractionally
         targetState.count -= consumptionRate;
-        creature.fraction += growth;
+        creature.fraction *= growthRate;
     } else {
         // Not enough target, shrink population
         const deficit = consumptionRate - targetState.count;
