@@ -37,7 +37,7 @@ function updateResources() {
 function growCreature(creatureKey) {
     const creature = creatureState[creatureKey];
     const creatureData = creatures[creatureKey];
-    const growthRate = 1 + creatureData.growthRateMultiplier;
+    const growthRateMultiplier = creatureData.growthRateMultiplier;
     const targetKey = creatureData.consumptionTarget;
 
     let targetState;
@@ -50,39 +50,38 @@ function growCreature(creatureKey) {
     const consumptionRate = creature.count * creatureData.consumptionRate;
 
     if (targetState.count >= consumptionRate) {
-        // Enough target available: consume and grow at growth rate
+        // Enough food: consume and grow
         targetState.count -= consumptionRate;
-        creature.fraction *= growthRate;
+        // Increase by growth rate: 
+        // If you have 10 creatures and multiplier is 0.1, count becomes floor(10 * (1 + 0.1)) = 11
+        creature.count = Math.floor(creature.count * (1 + growthRateMultiplier));
     } else {
-        // Not enough target: consume what's available and reduce by growth rate
+        // Not enough food: consume what's available and shrink
         targetState.count = Math.max(0, targetState.count - consumptionRate);
-        creature.fraction /= growthRate;
-    }
-
-    // Convert fractional growth or shrinkage into whole creatures
-    if (creature.fraction >= 1) {
-        const wholeGrowth = Math.floor(creature.fraction);
-        creature.fraction -= wholeGrowth;
-        creature.count += wholeGrowth;
-    } else if (creature.fraction <= -1) {
-        const wholeShrinkage = Math.floor(-creature.fraction);
-        creature.fraction += wholeShrinkage;
-        creature.count = Math.max(0, creature.count - wholeShrinkage);
+        // Decrease by growth rate:
+        // If you have 10 creatures and multiplier is 0.1, count becomes floor(10 * (1 - 0.1)) = floor(9) = 9
+        const reducedCount = Math.floor(creature.count * (1 - growthRateMultiplier));
+        creature.count = Math.max(0, reducedCount);
     }
 
     // Update displays
     if (targetKey === 'resources') {
-        // Update resources if they are the target
         resources = targetState.count;
         resourceCount.textContent = Math.floor(resources);
     } else {
-        // Update the target creature display
         const targetDisplay = document.getElementById(`${targetKey}-count`);
         if (targetDisplay) {
             targetDisplay.textContent = Math.floor(targetState.count);
         } else {
             console.error(`Element with id '${targetKey}-count' not found in HTML.`);
         }
+    }
+
+    const creatureDisplay = document.getElementById(`${creatureKey}-count`);
+    if (creatureDisplay) {
+        creatureDisplay.textContent = Math.floor(creature.count);
+    } else {
+        console.error(`Element with id '${creatureKey}-count' not found in HTML.`);
     }
 }
 
