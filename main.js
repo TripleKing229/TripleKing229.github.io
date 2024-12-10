@@ -13,7 +13,7 @@ let creatureState = {
 const resourceCount = document.getElementById('resource-count');
 const resourceCapDisplay = document.getElementById('resource-cap');
 const newCreatureButton = document.getElementById('new-creature-btn');
-const ProtazoaButton = document.getElementById('protazoa-btn');
+const protozoansButton = document.getElementById('protozoans-btn');
 const increaseCapButton = document.getElementById('increase-cap-btn');
 
 function updateResources() {
@@ -122,13 +122,13 @@ newCreatureButton.addEventListener('click', () => {
     }
 });
 
-ProtazoaButton.addEventListener('click', () => {
+protozoansButton.addEventListener('click', () => {
     if (creatureState.bacteria.count >= 10) {
         creatureState.bacteria.count -= 10;
-        creatureState.protazoa.count++;
-        const protazoaDisplay = document.getElementById('protazoa-count');
-        if (protazoaDisplay) {
-            protazoaDisplay.textContent = Math.floor(creatureState.protazoa.count);
+        creatureState.protozoans.count++;
+        const protozoansDisplay = document.getElementById('protozoans-count');
+        if (protozoansDisplay) {
+            protozoansDisplay.textContent = Math.floor(creatureState.protozoans.count);
         }
     }
 });
