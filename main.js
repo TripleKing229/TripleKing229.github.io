@@ -106,7 +106,7 @@ function growCreature(creatureKey) {
 // Function to dynamically enable or disable buttons
 function updateButtonStates() {
     newCreatureButton.disabled = resources < 10;
-    increaseCapButton.disabled = creatureState.bacteria.count < 10;
+    increaseCapButton.disabled = creatureState.bacteria.count < 10*1.5**resourceCapLevel;
 }
 
 // Button Handlers
@@ -137,7 +137,7 @@ increaseCapButton.addEventListener('click', () => {
     if (creatureState.bacteria.count >= 10*1.5**resourceCapLevel) {
         creatureState.bacteria.count -= 10*1.5**resourceCapLevel;
         resourceCapLevel++
-        increaseCapButton.innerHTML = "Increase Resource Cap (Costs " + 10*1.5**resourceCapLevel.tostring + " Bacteria"
+        increaseCapButton.innerHTML = "Increase Resource Cap (Costs " + (10*1.5**resourceCapLevel).tostring + " Bacteria"
         resourceCap = Math.floor(resourceCap * 1.2**resourceCapLevel);
         const bacteriaDisplay = document.getElementById('bacteria-count');
         if (bacteriaDisplay) {
