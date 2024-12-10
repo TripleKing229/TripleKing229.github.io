@@ -7,7 +7,7 @@ const creatures = {
     },
     protozoans: {
         name: "Protozoans",
-        growthRateMultiplier: 0.1,
+        growthRateMultiplier: 0.01,
         consumptionRate: 10,
         consumptionTarget: "bacteria",
     },
