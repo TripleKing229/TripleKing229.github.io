@@ -15,6 +15,23 @@ const resourceCapDisplay = document.getElementById('resource-cap');
 const newCreatureButton = document.getElementById('new-creature-btn');
 const increaseCapButton = document.getElementById('increase-cap-btn');
 
+function updateResources() {
+    const resourceGrowthRate = 2;
+
+    // Increment resources each second by the growth rate, capped at resourceCap
+    if (resources < resourceCap) {
+        resources *= resourceGrowthRate;
+        if (resources > resourceCap) {
+            resources = resourceCap;
+        }
+    }
+
+    resourceCount.textContent = Math.floor(resources);
+    resourceCapDisplay.textContent = Math.floor(resourceCap);
+
+    updateButtonStates();
+}
+
 // Function to grow creatures
 function growCreature(creatureKey) {
     const creature = creatureState[creatureKey];
@@ -58,22 +75,7 @@ function growCreature(creatureKey) {
         }
     }
     
-function updateResources() {
-    const resourceGrowthRate = 2;
 
-    // Increment resources each second by the growth rate, capped at resourceCap
-    if (resources < resourceCap) {
-        resources *= resourceGrowthRate;
-        if (resources > resourceCap) {
-            resources = resourceCap;
-        }
-    }
-
-    resourceCount.textContent = Math.floor(resources);
-    resourceCapDisplay.textContent = Math.floor(resourceCap);
-
-    updateButtonStates();
-}
 
    
 
