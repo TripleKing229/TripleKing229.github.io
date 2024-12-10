@@ -1,8 +1,8 @@
 import creatures from './creatures.js';
 
 let resources = 1; // Start with 1 resource
-let resourceCap = 1000; // Start with a resource cap
-
+let resourceCap = 1000;// Start with a resource cap
+let resourceCapLevel = 0;
 // State for creatures
 let creatureState = {
     bacteria: { count: 0, fraction: 0 },
@@ -134,9 +134,10 @@ protozoansButton.addEventListener('click', () => {
 });
 
 increaseCapButton.addEventListener('click', () => {
-    if (creatureState.bacteria.count >= 10) {
-        creatureState.bacteria.count -= 10;
-        resourceCap = Math.floor(resourceCap * 1.2);
+    if (creatureState.bacteria.count >= 10*1.5**resourceCapLevel) {
+        creatureState.bacteria.count -= 10*1.5**resourceCapLevel;
+        resourceCaplevel++
+        resourceCap = Math.floor(resourceCap * 1.2**resourceCapLevel);
         const bacteriaDisplay = document.getElementById('bacteria-count');
         if (bacteriaDisplay) {
             bacteriaDisplay.textContent = Math.floor(creatureState.bacteria.count);
