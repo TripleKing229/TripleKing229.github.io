@@ -136,7 +136,7 @@ protozoansButton.addEventListener('click', () => {
 increaseCapButton.addEventListener('click', () => {
     if (creatureState.bacteria.count >= 10*1.5**resourceCapLevel) {
         creatureState.bacteria.count -= 10*1.5**resourceCapLevel;
-        resourceCaplevel++
+        resourceCapLevel++
         increaseCapButton.innerHTML = "Increase Resource Cap (Costs " + 10*1.5**resourceCapLevel.tostring + " Bacteria"
         resourceCap = Math.floor(resourceCap * 1.2**resourceCapLevel);
         const bacteriaDisplay = document.getElementById('bacteria-count');
