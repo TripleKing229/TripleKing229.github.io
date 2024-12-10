@@ -138,6 +138,7 @@ increaseCapButton.addEventListener('click', () => {
     if (creatureState.bacteria.count >= buttonCost) {
         creatureState.bacteria.count -= buttonCost;
         resourceCapLevel++;
+        buttonCost = 10*1.5**resourceCapLevel
         increaseCapButton.innerHTML = "Increase Resource Cap (Costs " + buttonCost.toString() + " Bacteria)";
         resourceCap = Math.floor(resourceCap * 1.2**resourceCapLevel);
         const bacteriaDisplay = document.getElementById('bacteria-count');
