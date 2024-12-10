@@ -134,7 +134,7 @@ increaseCapButton.addEventListener('click', () => {
 // Main Game Loop
 setInterval(() => {
     console.log('Game loop running');
-    updateResources();
     growCreature('bacteria');
     growCreature('protozoans');
+    updateResources();
 }, 1000);
