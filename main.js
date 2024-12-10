@@ -55,20 +55,28 @@ function growCreature(creatureKey) {
         // Multiply count by (1 + growthRateMultiplier)
         // e.g. 5 creatures and a 0.1 multiplier -> 5 * 1.1 = 5.5
         creature.count = creature.count * (1 + growthRateMultiplier);
-    } else {
+        creature.fraction += creature.count - Math.floor(creature.count)
+        creature.count = Math.floor(creature.count)
+        if (creature.fraction >= 1){
+            creature.count++
+            creature.fraction--
+        }
+    } 
+    else {
         // Not enough food: consume what’s available and shrink
         targetState.count = Math.max(0, targetState.count - consumptionRate);
         // Multiply count by (1 - growthRateMultiplier)
         // e.g. 5 creatures and a 0.1 multiplier -> 5 * 0.9 = 4.5
         creature.count = Math.max(0, creature.count * (1 - growthRateMultiplier));
+        creature.fraction += creature.count - Math.floor(creature.count)
+        creature.count = Math.floor(creature.count)
+        if (creature.fraction >= 1){
+            creature.count++
+            creature.fraction--
+        }
     }
 
-    creature.fraction += creature.count - Math.floor(creature.count)
-    creature.count = Math.floor(creature.count)
-    if (creature.fraction >= 1){
-        creature.count++
-        creature.fraction--
-    }
+   
 
     // Update displays
     if (targetKey === 'resources') {
